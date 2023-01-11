@@ -28,7 +28,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         
         self.createNotifications()
         
-        //
+        // the url of your web app
         let url = URL(string: "http://localhost:3000")!
         let reqApp = URLRequest(url: url);
 
@@ -87,17 +87,5 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
             webSession.cancel()
         }
     }
-    
-}
-
-extension ViewController: ASWebAuthenticationPresentationContextProviding {
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return ASPresentationAnchor()
-    }
-}
-
-extension Notification.Name{
-    static let trustlyCloseWebview = Notification.Name("trustly.close.webView")
-
 }
 
