@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
 import PayCard from './PayCard';
 
 const ACCESS_ID = 'YOUR_ACCESS_ID';
@@ -16,26 +14,28 @@ function App() {
     widgetContainerId: "widget"
   };
 
-  const establishData = {
-    accessId: ACCESS_ID,
-    // requestSignature: REQUEST_SIGNATURE,
-    merchantId: MERCHANT_ID,
-    description: 'transaction description',
-    merchantReference: 'merchant reference',
-    paymentType: 'Retrieval',
-    returnUrl: `${serverURL}/return`,
-    cancelUrl: `${serverURL}/cancel`,
-    metadata: {
-	    urlScheme: "in-app-browser-ios",
-	    integrationContext: "InAppBrowser",
-	  }
+  const returnEstablishData = () => {
+    // TODO: add logic based on params
+    return {
+      accessId: ACCESS_ID,
+      // requestSignature: REQUEST_SIGNATURE,
+      merchantId: MERCHANT_ID,
+      description: 'transaction description',
+      merchantReference: 'merchant reference',
+      paymentType: 'Retrieval',
+      returnUrl: `${serverURL}/return`,
+      cancelUrl: `${serverURL}/cancel`,
+      metadata: {
+        urlScheme: "in-app-browser-ios://",
+        integrationContext: "InAppBrowser",
+      }  
+    }
   };
 
   return (
     <div className="App">
-      <div id="widget"></div>
         <PayCard 
-          establishData={establishData} 
+          establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}
         ></PayCard>
     </div>
