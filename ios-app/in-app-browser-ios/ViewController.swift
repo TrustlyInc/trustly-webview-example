@@ -29,7 +29,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         self.createNotifications()
         
         // the url of your web app
-        let url = URL(string: "http://localhost:3000")!
+        let url = URL(string: "http://localhost:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-ios")!
         let reqApp = URLRequest(url: url);
 
         self.webView = WKWebView(
