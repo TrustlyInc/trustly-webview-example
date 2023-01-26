@@ -1,11 +1,11 @@
 # About this demo
 
-This app demo has a propose to demonstrate how to implement the oauth authentication in IOS apps.
+The purpose of this app demo is to demonstrate how to implement the OAuth login flow in iOS apps.
 
 
 **IMPORTANT:**
 
- `SFSafari` is not allowed to call a deep link, in other words, the code bellow will not work, for this reason our recomendation to use `SFAuthenticationSession` or `ASWebAuthenticationSession` according to your iOS version.
+ `SFSafari` is not allowed to call a deep link, in other words, the code bellow will not work, unless you utilize the `SFAuthenticationSession` or `ASWebAuthenticationSession` classes, based on the supported iOS version.
 
 ```javascript
     window.location.href = "myapp://"
@@ -14,7 +14,7 @@ This app demo has a propose to demonstrate how to implement the oauth authentica
 
 ## Introduction
 
-We have two solutions to implement a better experience when the app needs to open a new browser window to do authentication.
+We have two solutions to implement a better experience when the app needs to open a new browser window to complete the OAuth login flow.
 
 - SFAuthenticationSession for **iOS 9 until 12**
 - ASWebAuthenticationSession for **iOS 13 or higher**
@@ -53,7 +53,7 @@ After that will be necessary extends the `ASWebAuthenticationPresentationContext
     }
 ```
 
-And finally, you can implement the method to create the oAuth behavior.
+And finally, you can implement the method to create the OAuth behavior.
 
 ```swift
     let webSession = ASWebAuthenticationSession(url: url, callbackURLScheme: calbackURL, completionHandler: { (url, error) in
