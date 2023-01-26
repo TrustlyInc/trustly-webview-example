@@ -4,6 +4,8 @@ const ACCESS_ID = 'YOUR_ACCESS_ID';
 const MERCHANT_ID = 'YOUR_MERCHANT_ID';
 const serverURL = 'YOUR_SERVER_URL';
 
+const params = new URLSearchParams(window.location.search);
+
 function App() {
   const TrustlyOptions = {
     closeButton: false,
@@ -23,6 +25,12 @@ function App() {
       cancelUrl: `${serverURL}/cancel`,
       metadata: {}  
     };
+    // check query params for mobile
+    if (params.get("integrationContext") && params.get("urlScheme")) {
+			if (!data.metadata) data.metadata = {};
+      data.metadata.urlScheme = params.get("urlScheme");
+      data.metadata.integrationContext = "InAppBrowser";
+    }
     return data;
   };
 
