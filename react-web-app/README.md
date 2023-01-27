@@ -2,7 +2,21 @@ This web app simply renders a "Pay with Trustly" button that is used to launch t
 
 # Getting Started
 
-In the app.js file, add your Access ID, Merchant ID and a server URL to be included in the [establish](https://developers.trustly.com/payments/docs/establish-data) object.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+1. Install dependencies
+
+### `npm install`
+
+2. Add your Trustly sandbox credentials
+
+In the `public/index.html` file, add your Trustly `AccessID` to the Lightbox script URL:
+
+```
+<script src="https://sandbox.trustly.one/start/scripts/trustly.js?accessId={YOUR_ACCESS_ID}"></script>
+```
+
+In the app.js file, add your `AccessID`, `MerchantID` and optionally add a server URL to handle the Lightbox redirect functions. These properties will be included in the [establish](https://developers.trustly.com/payments/docs/establish-data) object.
 
 ```
 // src/app.js
@@ -18,12 +32,8 @@ Then start it up:
 
 #### `npm start`
 
-Runs the app in the development mode.\
+This command runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-## Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

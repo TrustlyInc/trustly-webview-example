@@ -2,7 +2,7 @@ import PayCard from './PayCard';
 
 const ACCESS_ID = 'YOUR_ACCESS_ID';
 const MERCHANT_ID = 'YOUR_MERCHANT_ID';
-const serverURL = 'YOUR_SERVER_URL';
+const serverURL = null; // YOUR_SERVER_URL
 
 const params = new URLSearchParams(window.location.search);
 
@@ -14,6 +14,7 @@ function App() {
   };
 
   const returnEstablishData = () => {
+    let lightboxRedirectURL = serverURL ? serverURL : "#";
     let data = {
       accessId: ACCESS_ID,
       // requestSignature: REQUEST_SIGNATURE,
@@ -21,8 +22,8 @@ function App() {
       description: 'transaction description',
       merchantReference: 'merchant reference',
       paymentType: 'Retrieval',
-      returnUrl: `${serverURL}/return`,
-      cancelUrl: `${serverURL}/cancel`,
+      returnUrl: `${lightboxRedirectURL}/return`,
+      cancelUrl: `${lightboxRedirectURL}/cancel`,
       metadata: {}  
     };
     // check query params for mobile
