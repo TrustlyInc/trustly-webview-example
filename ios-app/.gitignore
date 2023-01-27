@@ -1,1 +1,6 @@
-*.xcodeproj
+.DS_Store
+.bundle
+
+**/xcuserdata
+*.pbxuser
+*.mode1v3
