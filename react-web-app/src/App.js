@@ -29,8 +29,8 @@ function App() {
     // check query params for mobile
     if (params.get("integrationContext") && params.get("urlScheme")) {
 			if (!data.metadata) data.metadata = {};
-      data.metadata.urlScheme = params.get("urlScheme");
-      data.metadata.integrationContext = "InAppBrowser";
+      data.metadata.urlScheme = `${params.get("urlScheme")}://`;
+      data.metadata.integrationContext = params.get("integrationContext");
     }
     return data;
   };
