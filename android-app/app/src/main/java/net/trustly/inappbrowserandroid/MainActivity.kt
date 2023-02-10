@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         webView.webViewClient = WebViewClient()
 
-        webView.loadUrl("www.trustly.net")
+        webView.loadUrl("file:///android_asset/paywithmybank.html")
     }
 
 }
