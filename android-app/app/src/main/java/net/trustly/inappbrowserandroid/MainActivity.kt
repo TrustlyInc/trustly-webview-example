@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl("http://localhost:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-android")
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        webView.loadUrl("window.Trustly.proceedToChooseAccount();")
+    }
+
     private fun launchUrl(context: Context, url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(context, Uri.parse(url))
