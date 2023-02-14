@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         webView.webViewClient = WebViewClient()
-
-        webView.loadUrl("file:///android_asset/paywithmybank.html")
+        webView.loadUrl("http://localhost:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-android")
     }
 
 }
