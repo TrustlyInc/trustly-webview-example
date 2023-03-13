@@ -1,8 +1,9 @@
 import PayCard from './PayCard';
 
-const ACCESS_ID = 'YOUR_ACCESS_ID';
-const MERCHANT_ID = 'YOUR_MERCHANT_ID';
-const serverURL = null; // YOUR_SERVER_URL
+const ACCESS_ID = 'A48B73F694C4C8EE6306';
+const MERCHANT_ID = '110005514';
+const serverURL = 'https://sandbox.paywithmybank.com'; // YOUR_SERVER_URL
+const REQUEST_SIGNATURE = 'HT5mVOqBXa8ZlvgX2USmPeLns5o=';
 
 const params = new URLSearchParams(window.location.search);
 
@@ -17,14 +18,21 @@ function App() {
     let lightboxRedirectURL = serverURL ? serverURL : "#";
     let data = {
       accessId: ACCESS_ID,
-      // requestSignature: REQUEST_SIGNATURE,
+      requestSignature: REQUEST_SIGNATURE,
       merchantId: MERCHANT_ID,
       description: 'transaction description',
       merchantReference: 'merchant reference',
       paymentType: 'Retrieval',
       returnUrl: `${lightboxRedirectURL}/return`,
       cancelUrl: `${lightboxRedirectURL}/cancel`,
-      metadata: {}  
+      metadata: {},
+      customer: {
+        name: 'Marcos',
+        address: {
+          country: 'US'
+        }
+        
+      }
     };
     // check query params for mobile
     if (params.get("integrationContext") && params.get("urlScheme")) {
