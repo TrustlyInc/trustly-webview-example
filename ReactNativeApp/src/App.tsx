@@ -131,7 +131,7 @@ export default class App extends Component {
     try {
       if (await InAppBrowser.isAvailable()) {
 
-        const result = await InAppBrowser.openAuth(url, 'in-app-browser-native', {
+        const result = await InAppBrowser.openAuth(url, '', {
           // iOS Properties
           ephemeralWebSession: true,
           dismissButtonStyle: 'cancel',
@@ -163,10 +163,12 @@ export default class App extends Component {
           headers: {
             'my-custom-header': 'my custom header value'
           }
-        })
+        }).then((response) => {
+          this.handleOAuthResult(response);
+        });
 
-        await this.sleep(800);
-        this.handleOAuthResult(result);
+        // await this.sleep(800);
+        
         
       }
       else Linking.openURL(url)
