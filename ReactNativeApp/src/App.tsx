@@ -84,7 +84,6 @@ export default class App extends Component {
     if (url.includes("/select-bank-widget")) {
       const fragment = url.substr(url.indexOf("#") + 1);
       const data = JSON.parse(decodeURIComponent(fragment));
-      console.log("handleWidgetStateChange data: ", data);
       this.setState({ establishData: data });
       this.showWebView()
       this.widgetWebview.stopLoading();
@@ -165,18 +164,30 @@ export default class App extends Component {
       }
       else Linking.openURL(url)
     } catch (error) {
+      console.log(error);
       Alert.alert("Error: ", error.message)
     }
   }
 
-  handleOauthMessage = (message) => {
-    const url = message.nativeEvent.data
-    if( shouldOpenInAppBrowser(url) ) {
-      this.openLink(url);
+  handleOauthMessage = (message: any) => {
+    console.log('handleOauthMessage: ', message.nativeEvent.data);
+    const data = message.nativeEvent.data
+
+    if ( typeof data !== 'string') return;
+
+    var [command, ...params] = data.split("|");
+
+    if(command.includes("ExternalBrowserIntegration")) {
+      var messageUrl = params[1]
+      
+      if( shouldOpenInAppBrowser(messageUrl) ) {
+        this.openLink(messageUrl);
+      }      
     }
+
   }
 
-  handleOAuthResult = (result) =>{
+  handleOAuthResult = (result: any) =>{
     if (result.type === 'success') {
       this.establishWebview.injectJavaScript('window.Trustly.proceedToChooseAccount();');
     }
@@ -194,14 +205,9 @@ export default class App extends Component {
     const postMessageForOauth = `
         window.addEventListener(
           "message",
-          (event) => {
-            var message = event.data.split("|");
-            var messageType = message[0]
-
-            if(messageType.includes("ExternalBrowserIntegration")) {
-              var messageUrl = message[2]
-              window.ReactNativeWebView.postMessage(messageUrl);
-            }
+          function (event) {
+            var data = (event || {}).data || {}
+            window.ReactNativeWebView.postMessage(event.data);
           },
           false
         );
