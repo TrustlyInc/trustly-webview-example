@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
-  Text,
   StyleSheet,
-  View,
   ActivityIndicator,
   Animated,
   Linking,
@@ -11,6 +9,7 @@ import {
 } from "react-native";
 import { WebView } from "react-native-webview";
 import { widget, establish } from "./trustly";
+import { shouldOpenInAppBrowser } from "./oauthUtils";
 
 import { InAppBrowser } from 'react-native-inappbrowser-reborn'
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -35,7 +34,7 @@ export default class App extends Component {
       },
     },
     metadata:{
-      integrationContext: "InAppBrowser",
+      integrationContext: "InAppBrowserNotify",
       urlScheme: "in-app-browser-native://"
     },
     requestSignature: "HT5mVOqBXa8ZlvgX2USmPeLns5o=",
@@ -85,6 +84,7 @@ export default class App extends Component {
     if (url.includes("/select-bank-widget")) {
       const fragment = url.substr(url.indexOf("#") + 1);
       const data = JSON.parse(decodeURIComponent(fragment));
+      console.log("handleWidgetStateChange data: ", data);
       this.setState({ establishData: data });
       this.showWebView()
       this.widgetWebview.stopLoading();
@@ -92,17 +92,12 @@ export default class App extends Component {
   };
 
   handleEstablishStateChange = (newNavState) => {
-    const baseUrls = ["paywithmybank.com", "trustly.one"];
-    const oauthLoginPath = "/oauth/login";
-    
     console.log("handleEstablishStateChange: ", newNavState);
     const { url } = newNavState;
     if (!url) return;
 
-    if ( (url.includes(baseUrls[0]) || url.includes(baseUrls[1]) ) && 
-      url.includes(oauthLoginPath) ) {
+    if ( shouldOpenInAppBrowser(url) ) {
         this.openLink(url)
-
     }
 
     if (url.includes("/trustly-establish-success")) {
@@ -166,9 +161,6 @@ export default class App extends Component {
         }).then((response) => {
           this.handleOAuthResult(response);
         });
-
-        // await this.sleep(800);
-        
         
       }
       else Linking.openURL(url)
@@ -177,18 +169,18 @@ export default class App extends Component {
     }
   }
 
-  handleMessage = (message) =>{
-    Alert.alert("Message: ", message)
+  handleOauthMessage = (message) => {
+    const url = message.nativeEvent.data
+    if( shouldOpenInAppBrowser(url) ) {
+      this.openLink(url);
+    }
   }
 
   handleOAuthResult = (result) =>{
-    Alert.alert("Result: ", JSON.stringify(result))
-    
     if (result.type === 'success') {
       this.establishWebview.injectJavaScript('window.Trustly.proceedToChooseAccount();');
     }
   }
-
 
   render() {
     const { bounceValue, showWebView, establishData } = this.state;
@@ -199,6 +191,22 @@ export default class App extends Component {
       height: '100%',
     };
 
+    const postMessageForOauth = `
+        window.addEventListener(
+          "message",
+          (event) => {
+            var message = event.data.split("|");
+            var messageType = message[0]
+
+            if(messageType.includes("ExternalBrowserIntegration")) {
+              var messageUrl = message[2]
+              window.ReactNativeWebView.postMessage(messageUrl);
+            }
+          },
+          false
+        );
+    `;
+
     return (
 
         <SafeAreaView style={backgroundStyle}>
@@ -207,7 +215,8 @@ export default class App extends Component {
               source={{ html: widget(this.widgetData) }}
               renderLoading={this.LoadingIndicatorView}
               onNavigationStateChange={this.handleWidgetStateChange}
-              onMessage={this.handleMessage}
+              injectedJavaScript={postMessageForOauth}
+              onMessage={this.handleOauthMessage}
               javaScriptEnabled={true}
               startInLoadingState
               style={styles.widget}
@@ -224,6 +233,8 @@ export default class App extends Component {
               }}
               renderLoading={this.LoadingIndicatorView}
               onNavigationStateChange={this.handleEstablishStateChange}
+              injectedJavaScript={postMessageForOauth}
+              onMessage={this.handleOauthMessage}
               javaScriptEnabled={true}
               startInLoadingState
             />
@@ -294,11 +305,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  // button: {
-  //   borderRadius: 100,
-  //   borderWidth: 2,
-  //   borderColor: "#333",
-  //   color: "#333",
-  //   padding: 15,
-  // },
 });
