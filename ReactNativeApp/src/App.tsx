@@ -4,19 +4,17 @@ import {
   ActivityIndicator,
   Animated,
   Linking,
-  Alert,
   SafeAreaView,
 } from "react-native";
 import { WebView } from "react-native-webview";
-import { widget, establish } from "./trustly";
+import { widget } from "./trustly";
 import { shouldOpenInAppBrowser } from "./oauthUtils";
 
 import { InAppBrowser } from 'react-native-inappbrowser-reborn'
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default class App extends Component {
-  widgetWebview = null;
-  establishWebview = null;
+  trustlyWebView = null;
 
   widgetData = {
     accessId: "A48B73F694C4C8EE6306",
@@ -42,8 +40,6 @@ export default class App extends Component {
 
   state = {
     bounceValue: new Animated.Value(1000),
-    showWebView: false,
-    establishData: null,
   };
 
   constructor(props) {
@@ -56,71 +52,18 @@ export default class App extends Component {
     );
   }
 
-  showWebView = () => {
-    Animated.spring(this.state.bounceValue, {
-      toValue: 0,
-      velocity: 1,
-      tension: 0,
-      friction: 8,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  hideWebView = () => {
-    Animated.spring(this.state.bounceValue, {
-      toValue: 1000,
-      velocity: 1,
-      tension: 0,
-      friction: 8,
-      useNativeDriver: true,
-    }).start();
-  };
 
   handleWidgetStateChange = (newNavState) => {
     console.log("handleWidgetStateChange: ", newNavState);
     const { url } = newNavState;
     if (!url) return;
 
-    if (url.includes("/select-bank-widget")) {
-      const fragment = url.substr(url.indexOf("#") + 1);
-      const data = JSON.parse(decodeURIComponent(fragment));
-      this.setState({ establishData: data });
-      this.showWebView()
-      this.widgetWebview.stopLoading();
-    }
-  };
-
-  handleEstablishStateChange = (newNavState) => {
-    console.log("handleEstablishStateChange: ", newNavState);
-    const { url } = newNavState;
-    if (!url) return;
-
-    if ( shouldOpenInAppBrowser(url) ) {
-        this.openLink(url)
-    }
-
-    if (url.includes("/trustly-establish-success")) {
-      console.log("Establish success: ", url);
-      this.setState({ establishData: null });
-      this.establishWebview.stopLoading();
-      this.hideWebView();
-      Alert.alert("Success!");
-    }
-
-    if (url.includes("/trustly-establish-cancel")) {
-      console.log("Establish cancel: ", url);
-      this.setState({ establishData: null });
-      this.establishWebview.stopLoading();
-      this.hideWebView();
-      Alert.alert("Cancel!");
-    }
-
-
   };
 
   async sleep(timeout: number) {
     return new Promise(resolve => setTimeout(resolve, timeout))
   }
+
   async openLink(url: string) {
     try {
       if (await InAppBrowser.isAvailable()) {
@@ -165,12 +108,10 @@ export default class App extends Component {
       else Linking.openURL(url)
     } catch (error) {
       console.log(error);
-      Alert.alert("Error: ", error.message)
     }
   }
 
   handleOauthMessage = (message: any) => {
-    console.log('handleOauthMessage: ', message.nativeEvent.data);
     const data = message.nativeEvent.data
 
     if ( typeof data !== 'string') return;
@@ -189,12 +130,12 @@ export default class App extends Component {
 
   handleOAuthResult = (result: any) =>{
     if (result.type === 'success') {
-      this.establishWebview.injectJavaScript('window.Trustly.proceedToChooseAccount();');
+      this.trustlyWebView.injectJavaScript('window.Trustly.proceedToChooseAccount();');
     }
   }
 
   render() {
-    const { bounceValue, showWebView, establishData } = this.state;
+    const { bounceValue } = this.state;
 
     const backgroundStyle = {
       backgroundColor: Colors.lighter,
@@ -217,7 +158,7 @@ export default class App extends Component {
 
         <SafeAreaView style={backgroundStyle}>
           <WebView
-              ref={(ref) => (this.widgetWebview = ref)}
+              ref={(ref) => (this.trustlyWebView = ref)}
               source={{ html: widget(this.widgetData) }}
               renderLoading={this.LoadingIndicatorView}
               onNavigationStateChange={this.handleWidgetStateChange}
@@ -228,29 +169,7 @@ export default class App extends Component {
               style={styles.widget}
             />
 
-        <Animated.View
-          style={[styles.subView, { transform: [{ translateY: bounceValue }] }]}
-        >
-          {establishData && (
-            <WebView
-              ref={(ref) => (this.establishWebview = ref)}
-              source={{
-                html: establish(establishData),
-              }}
-              renderLoading={this.LoadingIndicatorView}
-              onNavigationStateChange={this.handleEstablishStateChange}
-              injectedJavaScript={postMessageForOauth}
-              onMessage={this.handleOauthMessage}
-              javaScriptEnabled={true}
-              startInLoadingState
-            />
-          )}
-        </Animated.View>
-
         </SafeAreaView>
-
-
-
     );
   }
 }
@@ -261,16 +180,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: "#333",
     height: 50,
-  },
-
-  headerText: {
-    alignSelf: 'stretch',
-    backgroundColor: "#333",
-    height: 50,
-    textAlign: 'center',
-    color: "#fff",
-    fontSize: 20,
-    paddingTop: 10
   },
 
   widget: {
