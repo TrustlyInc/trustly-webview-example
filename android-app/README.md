@@ -56,5 +56,5 @@ When the application receive some action for `in-app-browser-android`, or the na
 Finally, in order to support a smooth user experience when an OAuth login authorization is completed and the user returns to the Lightbox, call this function using some code like this:
 
 ```kotlin
-    webView.loadUrl("window.Trustly.proceedToChooseAccount();")
+    webView.loadUrl("javascript:window.Trustly.proceedToChooseAccount();")
 ```
