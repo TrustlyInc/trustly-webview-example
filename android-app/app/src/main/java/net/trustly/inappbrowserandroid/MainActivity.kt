@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         }
-        webView.loadUrl("http://localhost:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-android")
+        webView.loadUrl("http://192.168.1.2:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-android")
     }
 
     override fun onResume() {
         super.onResume()
 
-        webView.loadUrl("window.Trustly.proceedToChooseAccount();")
+        webView.loadUrl("javascript:window.Trustly.proceedToChooseAccount();")
     }
 
     private fun launchUrl(context: Context, url: String) {
