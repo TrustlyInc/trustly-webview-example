@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        webView.loadUrl("window.Trustly.proceedToChooseAccount();")
+        webView.loadUrl("javascript:window.Trustly.proceedToChooseAccount();")
     }
 
     private fun launchUrl(context: Context, url: String) {
