@@ -21,7 +21,7 @@ function App() {
       merchantId: MERCHANT_ID,
       description: 'transaction description',
       merchantReference: 'merchant reference',
-      paymentType: 'Deferred',
+      paymentType: 'Retrieval',
       returnUrl: `${lightboxRedirectURL}/return`,
       cancelUrl: `${lightboxRedirectURL}/cancel`,
       metadata: {}  
