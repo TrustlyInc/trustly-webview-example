@@ -10,16 +10,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 2. Add your Trustly sandbox credentials
 
-In the `public/index.html` file, add your Trustly `AccessID` to the Lightbox script URL:
+Copy the `.env.sample` file to a new file `.env.local` and add your `AccessID` and `MerchantID`.
 
 ```
+REACT_APP_TRUSTLY_ACCESS_ID=YOUR_ACCESS_ID
+REACT_APP_TRUSTLY_MERCHANT_ID=YOUR_MERCHANT_ID
+```
+
+Your `AccessID` will now be included in the `./public/index.html` file to load the Trustly.js library and both properties will be used in the [establish](https://developers.trustly.com/payments/docs/establish-data) object.
+
+```
+./public/index.html
 <script src="https://sandbox.trustly.one/start/scripts/trustly.js?accessId={YOUR_ACCESS_ID}"></script>
 ```
 
-In the app.js file, add your `AccessID`, `MerchantID` and optionally add a server URL to handle the Lightbox redirect functions. These properties will be included in the [establish](https://developers.trustly.com/payments/docs/establish-data) object.
-
 ```
-// src/app.js
+./src/app.js
 
 const ACCESS_ID = 'YOUR_ACCESS_ID';
 const MERCHANT_ID = 'YOUR_MERCHANT_ID';

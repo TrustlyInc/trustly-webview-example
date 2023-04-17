@@ -1,8 +1,8 @@
 import PayCard from './PayCard';
 
-const ACCESS_ID = 'YOUR_ACCESS_ID';
-const MERCHANT_ID = 'YOUR_MERCHANT_ID';
-const serverURL = null; // YOUR_SERVER_URL
+const ACCESS_ID = process.env.REACT_APP_TRUSTLY_ACCESS_ID;
+const MERCHANT_ID = process.env.REACT_APP_TRUSTLY_MERCHANT_ID;
+const serverURL = process.env.SERVER_URL ? process.env.SERVER_URL : null;
 
 const params = new URLSearchParams(window.location.search);
 
