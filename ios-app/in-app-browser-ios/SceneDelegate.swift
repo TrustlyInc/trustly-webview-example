@@ -18,14 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        guard let _ = (scene as? UIWindowScene) else { return }
 //
         if connectionOptions.urlContexts.count > 0 {
-            NotificationCenter.default.post(name: .trustlyCloseWebview, object: nil)
+            NotificationCenter.default.post(name: .trustlyCloseInAppBrowser, object: nil)
         }
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         
         if URLContexts.count > 0 {
-            NotificationCenter.default.post(name: .trustlyCloseWebview, object: nil)
+            NotificationCenter.default.post(name: .trustlyCloseInAppBrowser, object: nil)
         }
     }
 

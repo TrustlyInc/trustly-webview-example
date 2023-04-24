@@ -40,32 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleURL(url: URL) {
+        
+        if url.absoluteString.contains("in-app-browser-ios:") {
+            NotificationCenter.default.post(name: .trustlyCloseInAppBrowser, object: nil)
+        }
 
-        // A host, a path and query params are expected, else the URL will not be handled.
-        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
-            let host = components.host,
-            let _ = components.path,
-            let params = components.queryItems else {
-                NSLog("Invalid URL. Host, path and query params are expected")
-                return
-        }
-        
-        NSLog("host: \(host)")
-        
-        for (index, pathComponent) in url.pathComponents.enumerated() {
-            NSLog("pathComponent \(index): \(pathComponent)")
-        }
-        
-        for query in params {
-            if let value = query.value {
-                NSLog("Query param \(query.name): \(value)")
-                continue
-            }
-            
-            NSLog("Query param \(query.name) has no value")
-        }
     }
-
-
 }
 
