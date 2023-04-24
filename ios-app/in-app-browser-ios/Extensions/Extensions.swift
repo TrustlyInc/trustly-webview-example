@@ -16,6 +16,6 @@ extension ViewController: ASWebAuthenticationPresentationContextProviding {
 }
 
 extension Notification.Name{
-    static let trustlyCloseWebview = Notification.Name("trustly.close.webView")
+    static let trustlyCloseInAppBrowser = Notification.Name("trustly.close.inAppBrowser")
 
 }

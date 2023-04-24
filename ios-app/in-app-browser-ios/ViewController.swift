@@ -20,7 +20,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     
     private func createNotifications(){
-        NotificationCenter.default.addObserver(self, selector: #selector(closeWebview), name: .trustlyCloseWebview, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeInAppBrowser), name: .trustlyCloseInAppBrowser, object: nil)
     }
     
     override func viewDidLoad() {
@@ -73,7 +73,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     private func buildASWebAuthenticationSession(url: URL, callbackURL: String){
         webSession = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackURL, completionHandler: { (url, error) in
 
-            self.webView.evaluateJavaScript("window.Trustly.proceedToChooseAccount();", completionHandler: nil)
+            self.proceedToChooseAccount()
 
         })
         
@@ -82,10 +82,16 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         webSession.start()
     }
     
-    @objc func closeWebview(notification: Notification){
+    @objc func closeInAppBrowser(notification: Notification){
         if webSession != nil {
             webSession.cancel()
         }
+        
+        self.proceedToChooseAccount()
+    }
+    
+    private func proceedToChooseAccount(){
+        self.webView.evaluateJavaScript("window.Trustly.proceedToChooseAccount();", completionHandler: nil)
     }
 }
 
