@@ -8,6 +8,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.browser.customtabs.CustomTabsIntent
+import net.trustly.inappbrowserandroid.TrustlyConstants
 import net.trustly.inappbrowserandroid.WebViewBaseActivity
 
 class WebViewClientActivity : WebViewBaseActivity() {
@@ -27,18 +28,18 @@ class WebViewClientActivity : WebViewBaseActivity() {
                 request: WebResourceRequest
             ): Boolean {
                 val url = request.url.toString()
-                if (url.contains("/oauth/login"))
+                if (url.contains(TrustlyConstants.OAUTH_LOGIN_PATH))
                     launchUrl(this@WebViewClientActivity, url)
                 return true
             }
         }
-        webView.loadUrl("http://192.168.1.4:3000?integrationContext=InAppBrowser&urlScheme=web-view-client-redirect")
+        webView.loadUrl(TrustlyConstants.TRUSTLY_URL + "web-view-client-redirect")
     }
 
     override fun onResume() {
         super.onResume()
 
-        webView.loadUrl("javascript:window.Trustly.proceedToChooseAccount();")
+        webView.loadUrl(TrustlyConstants.TRUSTLY_PROCEED_TO_CHOOSE_ACCOUNT_SCRIPT)
     }
 
     private fun launchUrl(context: Context, url: String) {

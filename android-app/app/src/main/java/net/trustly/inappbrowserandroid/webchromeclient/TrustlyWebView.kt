@@ -11,6 +11,7 @@ import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.browser.customtabs.CustomTabsIntent
+import net.trustly.inappbrowserandroid.TrustlyConstants
 
 @SuppressLint("SetJavaScriptEnabled")
 class TrustlyWebView : LinearLayout {
@@ -46,7 +47,7 @@ class TrustlyWebView : LinearLayout {
                     request: WebResourceRequest
                 ): Boolean {
                     val url = request.url.toString()
-                    if (url.contains("/oauth/login/"))
+                    if (url.contains(TrustlyConstants.OAUTH_LOGIN_PATH))
                         launchUrl(view.context, url)
                     return true
                 }
@@ -55,7 +56,7 @@ class TrustlyWebView : LinearLayout {
     }
 
     fun proceedToChooseAccount() {
-        webView.loadUrl("javascript:window.Trustly.proceedToChooseAccount();")
+        webView.loadUrl(TrustlyConstants.TRUSTLY_PROCEED_TO_CHOOSE_ACCOUNT_SCRIPT)
     }
 
     private fun launchUrl(context: Context, url: String) {

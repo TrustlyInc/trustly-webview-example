@@ -6,6 +6,7 @@ import android.os.Message
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebView.WebViewTransport
+import net.trustly.inappbrowserandroid.TrustlyConstants
 import net.trustly.inappbrowserandroid.WebViewBaseActivity
 
 class WebChromeClientActivity : WebViewBaseActivity() {
@@ -42,7 +43,7 @@ class WebChromeClientActivity : WebViewBaseActivity() {
                 } else false
             }
         }
-        webView.loadUrl("http://192.168.1.4:3000?integrationContext=InAppBrowser&urlScheme=web-chrome-client-redirect")
+        webView.loadUrl(TrustlyConstants.TRUSTLY_URL + "web-chrome-client-redirect")
     }
 
     override fun onResume() {
