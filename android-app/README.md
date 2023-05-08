@@ -13,7 +13,7 @@ This app demo has a propose to demonstrate how to implement the oauth authentica
 These are some example how to implement a sign-in on OAuth flow to use Trustly JavaScript SDK.
 The code is using Kotlin language implementation.
 
-### CustomWebView
+### TrustlyWebView
 
 It is a simple custom view with a WebView inside, to open the transported url.
 In your custom web view you need to create a CustomTabIntent to open the url:
@@ -25,12 +25,13 @@ In your custom web view you need to create a CustomTabIntent to open the url:
     }
 ```
 
-### CustomTabRedirectActivity
+### TrustlyWebChromeClientRedirectActivity and TrustlyWebViewClientRedirectActivity
 
-When the application receive some action for `in-app-browser-android`, or the name that you defined in `urlScheme`, it will call your target Activity with some flags, and reload it.
+When the application receive some action for example `web-chrome-client-redirect`, or the name that you defined in `urlScheme`, it will call your target Activity with some flags, and reload it.
+The example below is from `TrustlyWebChromeClientRedirectActivity`
 
 ```kotlin
-    Intent(this, MainActivity::class.java).apply {
+    Intent(this, WebChromeClientActivity::class.java).apply {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
     }.run { startActivity(this) }
     finish()
@@ -40,13 +41,13 @@ When the application receive some action for `in-app-browser-android`, or the na
 
 ```xml
     <activity
-    android:name=".CustomTabRedirectActivity"
+    android:name=".TrustlyWebChromeClientRedirectActivity"
     android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="in-app-browser-android" />
+            <data android:scheme="web-chrome-client-redirect" />
         </intent-filter>
     </activity>
 ```
