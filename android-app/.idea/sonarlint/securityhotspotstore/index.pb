@@ -9,5 +9,9 @@ Dapp/src/test/java/net/trustly/inappbrowserandroid/ExampleUnitTest.kt,d/7/d7e4b
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 ?
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
-q
-Aapp/src/main/java/net/trustly/inappbrowserandroid/MainActivity.kt,5/c/5c15feb41924356e6be85ef987af514649503f13
+—
+gapp/src/main/java/net/trustly/inappbrowserandroid/webviewclient/TrustlyWebViewClientRedirectActivity.kt,d/8/d852af39edf5bad4c73b4ec8f1245b592b441d80
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+x
+Happ/src/main/java/net/trustly/inappbrowserandroid/WebViewBaseActivity.kt,2/b/2b178c689d2b8eb0e317206aa1dbb6c371dfa537

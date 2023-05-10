@@ -13,7 +13,57 @@ This app demo has a propose to demonstrate how to implement the oauth authentica
 These are some example how to implement a sign-in on OAuth flow to use Trustly JavaScript SDK.
 The code is using Kotlin language implementation.
 
-### TrustlyWebView
+## WebClient
+
+There are two ways to create web clients for a WebView, `WebViewClient` and `WebChromeClient`.
+
+### WebViewClient implementation
+
+Using `WebViewClient` you can override many methods, but you need to implement the `shouldOverrideUrlLoading` method. This method determines what will happen when a URL is loaded in WebView.
+The example below is a simple implementation that calls the method which opens the CustomTabs.
+
+```kotlin
+    webView.webViewClient = object : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            val url = request.url.toString()
+            if (url.contains(TrustlyConstants.OAUTH_LOGIN_PATH))
+                launchUrl(this@WebViewClientActivity, url)
+            return true
+        }
+    }
+```
+
+### WebChromeClient implementation
+
+Using `WebChromeClient` you'll need to create your own WebView, add some configuration in the `settings` property, and transport itself to a custom WebView.
+The example below explain more about those implementation. First you need to add both `javaScriptCanOpenWindowsAutomatically` and `setSupportMultipleWindows(true)`, they are needed to listen the `window.open` method.
+
+```kotlin
+    webView.settings.apply {
+        javaScriptCanOpenWindowsAutomatically = true
+        setSupportMultipleWindows(true)
+    }
+```
+
+This is the `WebChromeClient` implementation, using a custom WebView to transport the URL and than open it inside that.
+The `trustlyWebView` is an instance of the custom WebView, which has the same implementation of a `WebViewClient`.
+
+```kotlin
+    webView.webChromeClient = object : WebChromeClient() {
+        override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
+            return if (view.hitTestResult.type == 0) {
+                //window.open
+                webView.addView(trustlyWebView)
+                val transport = resultMsg.obj as WebViewTransport
+                transport.webView = trustlyWebView.webView
+                resultMsg.sendToTarget()
+                true
+            } else false
+        }
+    }
+```
+
+### CustomTabsIntent
 
 It is a simple custom view with a WebView inside, to open the transported url.
 In your custom web view you need to create a CustomTabIntent to open the url:
