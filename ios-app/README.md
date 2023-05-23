@@ -11,6 +11,17 @@ The purpose of this app demo is to demonstrate how to implement the OAuth login 
     window.location.href = "myapp://"
 ```
 
+One of the parameters that we need in establish data is the `urlScheme`, this parameter is mandatory to help in the navigation.
+
+The `urlScheme` is a required parameter of the `ASWebAuthenticationSession` method. When the authentication process is completed, the `ASWebAuthenticationSession` component will utilize the `urlScheme` to manage the InAppBrowser screen.
+In the `App-to-App` user flow where the user is redirected to a bank's mobile app for authentication, the `urlScheme` will be used as the target upon redirect back to your application. In this case, the `AppDelegate` or `SceneDelegate` files in your iOS application will handle the behavior upon redirect.
+
+
+## AppDelegate vs SceneDelegate
+
+SceneDelegate was introduced with iOS 13. The SceneDelegate will be responsible for what is shown on the screen (Windows or Scenes). It will also handle and manage the way your app is displayed to the user.
+
+If your application was created before iOS 13 and was not updated to use the SceneDelegate, in this case all functions that will handle with `DeepLinks` or `urlScheme` should be implemented in AppDelegate file.
 
 ## Introduction
 
