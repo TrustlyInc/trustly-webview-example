@@ -12,7 +12,8 @@ import AuthenticationServices
 import SafariServices
 
 
-class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
+
     
     private let OBSERVER_NAME = "appInterface"
     private var webView: WKWebView!
@@ -29,7 +30,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         self.createNotifications()
         
         // the url of your web app
-        let url = URL(string: "http://localhost:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-ios")!
+        let url = URL(string: "http://localhost:3000?integrationContext=InAppBrowserNotify&urlScheme=in-app-browser-ios")!
         let reqApp = URLRequest(url: url);
 
         self.webView = WKWebView(
@@ -47,27 +48,21 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         let userController = WKUserContentController()
         let configuration = WKWebViewConfiguration()
         let wkPreferences = WKPreferences()
-        wkPreferences.javaScriptCanOpenWindowsAutomatically = true
+        userController.add(self, name: OBSERVER_NAME)
         configuration.preferences = wkPreferences
         configuration.userContentController = userController
         return configuration
     }
     
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-
-        if navigationAction.targetFrame == nil, let url = navigationAction.request.url {
-          if url.description.lowercased().range(of: "/oauth/login") != nil {
-
-              if #available(iOS 13, *) {
-                  self.buildASWebAuthenticationSession(url: url, callbackURL: "in-app-browser-ios")
-
-              } else {
-                  // handle iOS =<12 with SFAuthenticationSession
-              }
-          }
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if let data = message.body as? [String : String],
+           let url = URL(string: data["url"]!) {
+            if #available(iOS 13, *) {
+                self.buildASWebAuthenticationSession(url: url, callbackURL: "in-app-browser-ios")
+            } else {
+                // handle iOS =<12 with SFAuthenticationSession
+            }
         }
-
-        return nil
     }
     
     private func buildASWebAuthenticationSession(url: URL, callbackURL: String){

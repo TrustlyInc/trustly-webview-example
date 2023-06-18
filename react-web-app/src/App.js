@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import PayCard from './PayCard';
 
 const ACCESS_ID = process.env.REACT_APP_TRUSTLY_ACCESS_ID;
@@ -13,6 +14,20 @@ function App() {
     widgetContainerId: "widget"
   };
 
+  useEffect(() => {
+    window.Trustly.addPanelListener((command, obj) => {
+      switch(command) {
+        case "message":
+          if (obj.type === "PayWithMyBank.OpenExternalBrowser") {
+            //open inAppBrowser
+            window.webkit.messageHandlers.appInterface.postMessage({ url: obj.url });
+          }
+          break;
+        default:;
+      }
+    })
+  }, [])
+
   const returnEstablishData = () => {
     let lightboxRedirectURL = serverURL ? serverURL : "#";
     let data = {
@@ -24,8 +39,15 @@ function App() {
       paymentType: 'Retrieval',
       returnUrl: `${lightboxRedirectURL}/return`,
       cancelUrl: `${lightboxRedirectURL}/cancel`,
-      metadata: {}  
+      customer: {
+        name: 'John smith',
+        address: {
+          country: 'US'
+        },
+      },
+      metadata: {}
     };
+
     // check query params for mobile
     if (params.get("integrationContext") && params.get("urlScheme")) {
 			if (!data.metadata) data.metadata = {};
