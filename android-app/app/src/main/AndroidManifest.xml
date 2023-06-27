@@ -11,8 +11,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.InAppBrowserAndroid"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -23,13 +23,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CustomTabRedirectActivity"
+            android:name=".WebViewBaseActivity"
+            android:exported="true" />
+        <!-- WebViewClient -->
+        <activity
+            android:name=".webviewclient.WebViewClientActivity"
+            android:exported="true"
+            android:label="@string/webview_client" />
+        <activity
+            android:name=".webviewclient.TrustlyWebViewClientRedirectActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="in-app-browser-android" />
+
+                <data android:scheme="web-view-client-redirect" />
+            </intent-filter>
+        </activity>
+        <!-- WebChromeClient -->
+        <activity
+            android:name=".webchromeclient.WebChromeClientActivity"
+            android:exported="true"
+            android:label="@string/webchrome_client" />
+        <activity
+            android:name=".webchromeclient.TrustlyWebChromeClientRedirectActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="web-chrome-client-redirect" />
             </intent-filter>
         </activity>
     </application>

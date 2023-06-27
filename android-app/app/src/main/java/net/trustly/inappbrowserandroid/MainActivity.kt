@@ -1,61 +1,27 @@
 package net.trustly.inappbrowserandroid
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
+import net.trustly.inappbrowserandroid.webchromeclient.WebChromeClientActivity
+import net.trustly.inappbrowserandroid.webviewclient.WebViewClientActivity
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var webView: WebView
-
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        webView = findViewById(R.id.webView)
-
-        val settings = webView.settings
-        settings.apply {
-            javaScriptEnabled = true
-            domStorageEnabled = true
+        val webViewClientButton = findViewById<Button>(R.id.webViewClientButton)
+        webViewClientButton.setOnClickListener {
+            startActivity(Intent(this, WebViewClientActivity::class.java))
         }
 
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView,
-                request: WebResourceRequest
-            ): Boolean {
-                try {
-                    val url = request.url.toString()
-                    if (url.contains("/oauth/login"))
-                        launchUrl(this@MainActivity, url)
-                    return false
-                } catch (e: Exception) {
-                    Log.e("MainActivity", e.message.toString())
-                }
-                return true
-            }
+        val webViewChromeButton = findViewById<Button>(R.id.webViewChromeButton)
+        webViewChromeButton.setOnClickListener {
+            startActivity(Intent(this, WebChromeClientActivity::class.java))
         }
-        webView.loadUrl("http://localhost:3000?integrationContext=InAppBrowser&urlScheme=in-app-browser-android")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        webView.loadUrl("javascript:window.Trustly.proceedToChooseAccount();")
-    }
-
-    private fun launchUrl(context: Context, url: String) {
-        val customTabsIntent = CustomTabsIntent.Builder().build()
-        customTabsIntent.launchUrl(context, Uri.parse(url))
     }
 
 }
