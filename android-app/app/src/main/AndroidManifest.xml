@@ -23,13 +23,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CustomTabRedirectActivity"
+            android:name=".TrustlyRedirectActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="in-app-browser-android" />
+
+                <data android:scheme="redirect-navigation" />
+                <data android:path="/second-fragment" />
             </intent-filter>
         </activity>
     </application>

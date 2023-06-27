@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">InAppBrowserAndroid</string>
+    <string name="hello_first_fragment">Hello First fragment</string>
+    <string name="go_to_second_fragment_button">Go to Second fragment</string>
 </resources>
