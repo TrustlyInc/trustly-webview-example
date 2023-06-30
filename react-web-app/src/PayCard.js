@@ -10,7 +10,7 @@ export default function PayCard(props) {
     <Card sx={{ minWidth: 275, maxWidth: 500, margin: 5}}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Thanks for shopping with us!
+          Launch the Lightbox directly
         </Typography>
       </CardContent>
       <CardActions>

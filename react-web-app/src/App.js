@@ -36,22 +36,17 @@ function App() {
     return data;
   };
 
-  // const renderWidget = (data, options) => {
-  //   window.Trustly.selectBankWidget(data, options);
-  // }
-
   return (
     <div className="App">
+        <SelectBankCard
+          establishData={returnEstablishData} 
+          TrustlyOptions={TrustlyOptions}
+        >
+        </SelectBankCard>
         <PayCard 
           establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}
         ></PayCard>
-        <SelectBankCard
-          establishData={returnEstablishData} 
-          TrustlyOptions={TrustlyOptions}
-          // renderWidget={renderWidget}
-        >
-        </SelectBankCard>
     </div>
   );
 }
