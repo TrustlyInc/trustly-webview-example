@@ -10,7 +10,7 @@ export default function PayCard(props) {
     <Card sx={{ minWidth: 275, maxWidth: 550, margin: 5}}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Launch the Lightbox directly
+          Example of a button that launches the Lightbox directly
         </Typography>
       </CardContent>
       <CardActions>
@@ -19,7 +19,8 @@ export default function PayCard(props) {
           size='small'
           onClick={()=> window.Trustly.establish(props.establishData(), props.TrustlyOptions)} 
         >
-          <img src='https://paywithmybank.com/assets/mark_trustly-365x52/mark_trustly-365x52-2_light_en-US.png' alt='Trustly payment mark'/>
+          <img src='https://paywithmybank.com/start/asset/mark_trustly-256x65_1_light_en-US.png' alt='Trustly payment mark'/>
+          {/* https://paywithmybank.com/start/asset/mark_trustly-256x65_1_light_en-US.png */}
         </Button>
       </CardActions>
     </Card>

@@ -15,7 +15,7 @@ export default function SelectBankCard(props) {
     <Card sx={{ minWidth: 275, maxWidth: 550, margin: 5}}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Show the Select Bank Widget
+          Example of the Select Bank Widget
         </Typography>
         <div id="widget"></div>
       </CardContent>

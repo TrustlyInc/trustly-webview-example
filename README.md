@@ -1,6 +1,8 @@
-# Trustly OAuth Webview iOS and Android Sample Apps
+# Trustly Mobile Webview Example App
 
-This project is provided as an example of integration between a web app serving the Trustly Lightbox checkout experience and mobile apps that renders that web app from a webview. Specifically, this example focuses on successfully handling OAuth and App-to-App bank authorization user flows. There is no sample functionality beyond successfully authorizing a user with a bank.
+<img src="https://user-images.githubusercontent.com/13320316/255275758-068fbcd2-b681-4fdb-a914-15ba1c875c5a.png" alt="screenshot of example app" width="250">
+
+This project is provided as an example of integration between a web app serving the Trustly UI and mobile apps that render that web app from a webview. Specifically, this example focuses on successfully handling OAuth and App-to-App bank authorization user flows. The repository can be used alongside Trustly's [Mobile App Webview tutorial](https://amer.developers.trustly.com/payments/docs/oauth-for-mobile-apps).
 
 ## The Web App
 
