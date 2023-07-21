@@ -14,8 +14,12 @@ export default function PayCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={()=> window.Trustly.establish(props.establishData(), props.TrustlyOptions)}>
-          Pay with Trustly
+        <Button 
+          variant='text' 
+          size='small'
+          onClick={()=> window.Trustly.establish(props.establishData(), props.TrustlyOptions)} 
+        >
+          <img src='https://paywithmybank.com/assets/mark_trustly-365x52/mark_trustly-365x52-2_light_en-US.png' alt='Trustly payment mark'/>
         </Button>
       </CardActions>
     </Card>
