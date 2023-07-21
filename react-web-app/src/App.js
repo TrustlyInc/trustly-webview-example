@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import HeaderBar from './HeaderBar';
 import PayCard from './PayCard';
 import SelectBankCard from './SelectBankCard';
 
@@ -40,13 +40,7 @@ function App() {
 
   return (
     <div className='App'>
-      <AppBar position='static' style={{backgroundColor: '#003140'}}>
-        <Toolbar>
-          <Typography variant='h5'>
-            Trustly Demo App
-          </Typography>
-        </Toolbar>
-      </AppBar>
+        <HeaderBar />
         <SelectBankCard
           establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}

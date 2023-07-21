@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export default function PayCard(props) {
   return (
-    <Card sx={{ minWidth: 275, maxWidth: 500, margin: 5}}>
+    <Card sx={{ minWidth: 275, maxWidth: 550, margin: 5}}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Launch the Lightbox directly

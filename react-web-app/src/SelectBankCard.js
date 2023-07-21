@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { Typography } from '@mui/material';
 
 export default function SelectBankCard(props) {
 
@@ -11,8 +12,11 @@ export default function SelectBankCard(props) {
   });
 
   return (
-    <Card sx={{ maxWidth: 600, margin: 5}}>
+    <Card sx={{ minWidth: 275, maxWidth: 550, margin: 5}}>
       <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Show the Select Bank Widget
+        </Typography>
         <div id="widget"></div>
       </CardContent>
     </Card>
