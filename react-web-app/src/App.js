@@ -1,3 +1,4 @@
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import PayCard from './PayCard';
 import SelectBankCard from './SelectBankCard';
 
@@ -22,6 +23,7 @@ function App() {
       merchantId: MERCHANT_ID,
       description: 'transaction description',
       merchantReference: 'merchant reference',
+      currency: 'USD',
       paymentType: 'Deferred',
       returnUrl: `${lightboxRedirectURL}/return`,
       cancelUrl: `${lightboxRedirectURL}/cancel`,
@@ -37,7 +39,14 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className='App'>
+      <AppBar position='static' style={{backgroundColor: '#003140'}}>
+        <Toolbar>
+          <Typography variant='h5'>
+            Trustly Demo App
+          </Typography>
+        </Toolbar>
+      </AppBar>
         <SelectBankCard
           establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}

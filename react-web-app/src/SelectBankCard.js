@@ -11,7 +11,7 @@ export default function SelectBankCard(props) {
   });
 
   return (
-    <Card sx={{ minWidth: 275, maxWidth: 500, margin: 5}}>
+    <Card sx={{ maxWidth: 600, margin: 5}}>
       <CardContent>
         <div id="widget"></div>
       </CardContent>
