@@ -1,4 +1,6 @@
+import HeaderBar from './HeaderBar';
 import PayCard from './PayCard';
+import SelectBankCard from './SelectBankCard';
 
 const ACCESS_ID = process.env.REACT_APP_TRUSTLY_ACCESS_ID;
 const MERCHANT_ID = process.env.REACT_APP_TRUSTLY_MERCHANT_ID;
@@ -21,7 +23,8 @@ function App() {
       merchantId: MERCHANT_ID,
       description: 'transaction description',
       merchantReference: 'merchant reference',
-      paymentType: 'Retrieval',
+      currency: 'USD',
+      paymentType: 'Deferred',
       returnUrl: `${lightboxRedirectURL}/return`,
       cancelUrl: `${lightboxRedirectURL}/cancel`,
       metadata: {}  
@@ -36,7 +39,13 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className='App'>
+        <HeaderBar />
+        <SelectBankCard
+          establishData={returnEstablishData} 
+          TrustlyOptions={TrustlyOptions}
+        >
+        </SelectBankCard>
         <PayCard 
           establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}
