@@ -6,7 +6,7 @@ This project is provided as an example of integration between a web app serving 
 
 ## The Web App
 
-The `react-web-app` directory contains a simple React app that displays a "Pay with Trustly" button which launches the Lightbox. Instructions for running this app can be found in that directory's [ReadMe](./react-web-app/README.md).
+The `react-web-app` directory contains a simple React app that displays Two cards: one that renders the Select Bank Widget and another with a button that contains a Trustly payment mark which launches the Lightbox. Instructions for running this app can be found in that directory's [ReadMe](./react-web-app/README.md).
 
 ## The iOS App
 
