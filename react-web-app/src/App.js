@@ -1,10 +1,11 @@
 import HeaderBar from './HeaderBar';
 import PayCard from './PayCard';
+import ReturnCard from './ReturnCard';
 import SelectBankCard from './SelectBankCard';
 
 const ACCESS_ID = process.env.REACT_APP_TRUSTLY_ACCESS_ID;
 const MERCHANT_ID = process.env.REACT_APP_TRUSTLY_MERCHANT_ID;
-const serverURL = process.env.SERVER_URL ? process.env.SERVER_URL : null;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const params = new URLSearchParams(window.location.search);
 
@@ -16,7 +17,6 @@ function App() {
   };
 
   const returnEstablishData = () => {
-    let lightboxRedirectURL = serverURL ? serverURL : "#";
     let data = {
       accessId: ACCESS_ID,
       // requestSignature: REQUEST_SIGNATURE,
@@ -25,15 +25,20 @@ function App() {
       merchantReference: 'merchant reference',
       currency: 'USD',
       paymentType: 'Deferred',
-      returnUrl: `${lightboxRedirectURL}/return`,
-      cancelUrl: `${lightboxRedirectURL}/cancel`,
-      metadata: {}  
+      returnUrl: `/return`,
+      cancelUrl: `/cancel`,
     };
     // check query params for mobile
     if (params.get("integrationContext") && params.get("urlScheme")) {
 			if (!data.metadata) data.metadata = {};
       data.metadata.urlScheme = `${params.get("urlScheme")}://`;
       data.metadata.integrationContext = params.get("integrationContext");
+    }
+    // add URLs if configured
+    if (BACKEND_URL) {
+      data.notificationUrl = `${BACKEND_URL}/trustly-webhooks`;
+      data.returnUrl = `${BACKEND_URL}/return`;
+      data.cancelUrl = `${BACKEND_URL}/cancel`;
     }
     return data;
   };
@@ -50,6 +55,7 @@ function App() {
           establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}
         ></PayCard>
+        <ReturnCard params={params}/>
     </div>
   );
 }
