@@ -19,6 +19,15 @@ There are two ways to create web clients for a WebView, `WebViewClient` and `Web
 
 ### WebViewClient implementation
 
+Using `WebViewClient` you'll need to add a configuration in the `settings` property.
+The example below explain more about this implementation. You need to add `javaScriptCanOpenWindowsAutomatically` that is needed to listen the `window.open` method.
+
+```kotlin
+    webView.settings.apply {
+        javaScriptCanOpenWindowsAutomatically = true
+    }
+```
+
 Using `WebViewClient` you can override many methods, but you need to implement the `shouldOverrideUrlLoading` method. This method determines what will happen when a URL is loaded in WebView.
 The example below is a simple implementation that calls the method which opens the CustomTabs.
 
