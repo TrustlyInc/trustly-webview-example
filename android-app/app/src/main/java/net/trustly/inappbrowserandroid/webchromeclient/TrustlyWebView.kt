@@ -49,6 +49,9 @@ class TrustlyWebView : LinearLayout {
                     val url = request.url.toString()
                     if (url.contains(TrustlyConstants.OAUTH_LOGIN_PATH))
                         launchUrl(view.context, url)
+
+                    // This return depends of your context, you can see the Android documentation to know more about it
+                    // https://developer.android.com/reference/android/webkit/WebViewClient#shouldOverrideUrlLoading(android.webkit.WebView,%20java.lang.String)
                     return true
                 }
             }
@@ -61,6 +64,7 @@ class TrustlyWebView : LinearLayout {
 
     private fun launchUrl(context: Context, url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.intent.setPackage("com.android.chrome")
         customTabsIntent.launchUrl(context, Uri.parse(url))
     }
 
