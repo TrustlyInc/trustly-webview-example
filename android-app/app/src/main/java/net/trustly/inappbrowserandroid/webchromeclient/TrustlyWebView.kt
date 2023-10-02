@@ -50,7 +50,7 @@ class TrustlyWebView : LinearLayout {
                     if (url.contains(TrustlyConstants.OAUTH_LOGIN_PATH))
                         launchUrl(view.context, url)
 
-                    // This return depends of your context, you can see the Android documentation to know more about it
+                    // This return depends on your context, visit the Android documentation to learn more about it.
                     // https://developer.android.com/reference/android/webkit/WebViewClient#shouldOverrideUrlLoading(android.webkit.WebView,%20java.lang.String)
                     return true
                 }

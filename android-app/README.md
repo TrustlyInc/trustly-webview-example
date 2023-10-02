@@ -20,7 +20,7 @@ There are two ways to create web clients for a WebView, `WebViewClient` and `Web
 ### WebViewClient implementation
 
 Using `WebViewClient` you'll need to add a configuration in the `settings` property.
-The example below explain more about this implementation. You need to add `javaScriptCanOpenWindowsAutomatically` that is needed to listen the `window.open` method.
+Set the `javaScriptCanOpenWindowsAutomatically` property to true in order to enable the application to properly handle `window.open` events.
 
 ```kotlin
     webView.settings.apply {
