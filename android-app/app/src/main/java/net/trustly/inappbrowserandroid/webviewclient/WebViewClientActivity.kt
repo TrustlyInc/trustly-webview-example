@@ -20,6 +20,7 @@ class WebViewClientActivity : WebViewBaseActivity() {
         webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
+            javaScriptCanOpenWindowsAutomatically = true
         }
 
         webView.webViewClient = object : WebViewClient() {
@@ -30,6 +31,9 @@ class WebViewClientActivity : WebViewBaseActivity() {
                 val url = request.url.toString()
                 if (url.contains(TrustlyConstants.OAUTH_LOGIN_PATH))
                     launchUrl(this@WebViewClientActivity, url)
+
+                // This return depends on your context, visit the Android documentation to learn more about it.
+                // https://developer.android.com/reference/android/webkit/WebViewClient#shouldOverrideUrlLoading(android.webkit.WebView,%20java.lang.String)
                 return true
             }
         }
@@ -44,6 +48,7 @@ class WebViewClientActivity : WebViewBaseActivity() {
 
     private fun launchUrl(context: Context, url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.intent.setPackage("com.android.chrome")
         customTabsIntent.launchUrl(context, Uri.parse(url))
     }
 
