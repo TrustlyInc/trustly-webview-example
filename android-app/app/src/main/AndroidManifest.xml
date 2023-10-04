@@ -27,9 +27,9 @@
             android:exported="true" />
         <!-- WebViewClient -->
         <activity
-            android:name=".webviewclient.WebViewClientActivity"
+            android:name=".webviewclient.CustomTabActivity"
             android:exported="true"
-            android:label="@string/webview_client" />
+            android:label="@string/custom_tabs" />
         <activity
             android:name=".webviewclient.TrustlyWebViewClientRedirectActivity"
             android:exported="true">
@@ -40,23 +40,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="web-view-client-redirect" />
-            </intent-filter>
-        </activity>
-        <!-- WebChromeClient -->
-        <activity
-            android:name=".webchromeclient.WebChromeClientActivity"
-            android:exported="true"
-            android:label="@string/webchrome_client" />
-        <activity
-            android:name=".webchromeclient.TrustlyWebChromeClientRedirectActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="web-chrome-client-redirect" />
             </intent-filter>
         </activity>
     </application>
