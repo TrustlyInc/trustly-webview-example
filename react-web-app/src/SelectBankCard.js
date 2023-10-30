@@ -9,6 +9,25 @@ export default function SelectBankCard(props) {
     // const [establishData, TrustlyOptions] = props;
     const data = props.establishData();
     window.Trustly.selectBankWidget(data, props.TrustlyOptions);
+
+    // logic for handling inLine Lightbox
+    let widgetContainer = document.getElementById("widget");
+    let lightboxContainer = document.getElementById("lightbox");
+
+    window.Trustly.addPanelListener((command, obj) => {
+      switch(command) {
+        case "open":
+          console.log("Lightbox will open");
+          widgetContainer.style.display = 'none';
+          break;
+
+        case "close":
+          widgetContainer.style.display = 'block';
+          lightboxContainer.replaceChildren();
+          console.log("Lightbox was closed");
+          break;
+      }
+    });
   });
 
   return (
@@ -18,6 +37,7 @@ export default function SelectBankCard(props) {
           Example of the Select Bank Widget
         </Typography>
         <div id="widget"></div>
+        <div id="lightbox"></div>
       </CardContent>
     </Card>
   );

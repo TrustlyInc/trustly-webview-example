@@ -10,9 +10,11 @@ const params = new URLSearchParams(window.location.search);
 
 function App() {
   const TrustlyOptions = {
-    closeButton: false,
-    dragAndDrop: true,
-    widgetContainerId: "widget"
+    // closeButton: false,
+    // dragAndDrop: true,
+    widgetContainerId: "widget",
+    containerId: "lightbox",
+    embedded: true
   };
 
   const returnEstablishData = () => {
@@ -25,6 +27,10 @@ function App() {
       merchantReference: 'merchant reference',
       currency: 'USD',
       paymentType: 'Deferred',
+      customer: {
+        name: "John Doe",
+        externalId: "1234125132"
+      },
       returnUrl: `${lightboxRedirectURL}/return`,
       cancelUrl: `${lightboxRedirectURL}/cancel`,
       metadata: {}  
@@ -46,10 +52,10 @@ function App() {
           TrustlyOptions={TrustlyOptions}
         >
         </SelectBankCard>
-        <PayCard 
+        {/* <PayCard 
           establishData={returnEstablishData} 
           TrustlyOptions={TrustlyOptions}
-        ></PayCard>
+        ></PayCard> */}
     </div>
   );
 }

@@ -12,6 +12,7 @@ export default function PayCard(props) {
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Example of a button that launches the Lightbox directly
         </Typography>
+        <div id="lightbox"></div>
       </CardContent>
       <CardActions>
         <Button 
