@@ -31,14 +31,19 @@ export default function SelectBankCard(props) {
   });
 
   return (
+    <div>
     <Card sx={{ minWidth: 275, maxWidth: 550, margin: 5}}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Example of the Select Bank Widget
         </Typography>
         <div id="widget"></div>
-        <div id="lightbox"></div>
+        
       </CardContent>
     </Card>
+      <div id="lightbox" style={{"height": "700px"}}></div>
+      {/* By removng the style override the Lightbox will not fit on the page  */}
+      {/* <div id="lightbox"></div>  */}
+    </div>
   );
 }
