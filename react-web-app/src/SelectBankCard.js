@@ -7,8 +7,10 @@ export default function SelectBankCard(props) {
   useEffect(() => {
     const { establishData, TrustlyOptions } = props;
 
-    const data = establishData();
-    window.Trustly.selectBankWidget(data, TrustlyOptions);
+    (async () => {
+      const data = await establishData();
+      window.Trustly.selectBankWidget(data, TrustlyOptions);
+    })();
   }, [props]);
 
   return (
