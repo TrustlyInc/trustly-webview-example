@@ -1,4 +1,4 @@
-import { getRequestSignature } from './utils/signature';
+// import { getRequestSignature } from './utils/signature';
 import HeaderBar from './HeaderBar';
 import PayCard from './PayCard';
 import SelectBankCard from './SelectBankCard';
@@ -46,11 +46,11 @@ function App() {
       data.metadata.integrationContext = params.get('integrationContext');
     }
 
-    // sign request
-    await (async () => {
-      const requestSignature = await getRequestSignature(data);
-      data.requestSignature = requestSignature;
-    })();
+    // sign request - instructions available in readme.md
+    // await (async () => {
+    //   const requestSignature = await getRequestSignature(data);
+    //   data.requestSignature = requestSignature;
+    // })();
 
     return data;
   };
