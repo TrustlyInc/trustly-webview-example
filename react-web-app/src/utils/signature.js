@@ -1,6 +1,5 @@
-const SIGNATURE_API_URL = process.env.REACT_APP_TRUSTLY_SIGNATURE_API_URL;
-
 export async function getRequestSignature(establishData) {
+  const { SIGNATURE_API_URL } = window.env;
   let requestSignature = null;
 
   await fetch(SIGNATURE_API_URL, {

@@ -12,6 +12,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Copy the `.env.sample` file to a new `.env.local` file and fill out your environment variables.
 
+Alternatively, you can pass these data later using query parameters, via camelCase keys. Example:
+
+`?accessId=YOUR_ACCESS_ID&merchantId=YOUR_MERCHANT_ID`
+
+Both ways to fill the data work the same.
+
 3. Run
 
 `npm start`
