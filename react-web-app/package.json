@@ -1,6 +1,9 @@
 {
   "name": "react-web-app-trustly-sample",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=20"
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
