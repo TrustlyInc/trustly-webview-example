@@ -1,3 +1,4 @@
+// import { getRequestSignature } from './utils/signature';
 import HeaderBar from './HeaderBar';
 import PayCard from './PayCard';
 import SelectBankCard from './SelectBankCard';
@@ -12,44 +13,59 @@ function App() {
   const TrustlyOptions = {
     closeButton: false,
     dragAndDrop: true,
-    widgetContainerId: "widget"
+    widgetContainerId: 'widget',
   };
 
-  const returnEstablishData = () => {
-    let lightboxRedirectURL = serverURL ? serverURL : "#";
+  const returnEstablishData = async () => {
+    let lightboxRedirectURL = serverURL ? serverURL : '#';
+
     let data = {
       accessId: ACCESS_ID,
-      // requestSignature: REQUEST_SIGNATURE,
-      merchantId: MERCHANT_ID,
-      description: 'transaction description',
-      merchantReference: 'merchant reference',
+      amount: '1.00',
+      cancelUrl: `${lightboxRedirectURL}/cancel`,
       currency: 'USD',
+      customer: {
+        address: {
+          country: 'US',
+        },
+        email: 'john@us.com',
+        name: 'John',
+      },
+      description: 'transaction description',
+      merchantId: MERCHANT_ID,
+      merchantReference: 'merchant reference',
+      metadata: {},
       paymentType: 'Deferred',
       returnUrl: `${lightboxRedirectURL}/return`,
-      cancelUrl: `${lightboxRedirectURL}/cancel`,
-      metadata: {}  
     };
+
     // check query params for mobile
-    if (params.get("integrationContext") && params.get("urlScheme")) {
-			if (!data.metadata) data.metadata = {};
-      data.metadata.urlScheme = `${params.get("urlScheme")}://`;
-      data.metadata.integrationContext = params.get("integrationContext");
+    if (params.get('integrationContext') && params.get('urlScheme')) {
+      if (!data.metadata) data.metadata = {};
+      data.metadata.urlScheme = `${params.get('urlScheme')}://`;
+      data.metadata.integrationContext = params.get('integrationContext');
     }
+
+    // sign request - instructions available in readme.md
+    // await (async () => {
+    //   const requestSignature = await getRequestSignature(data);
+    //   data.requestSignature = requestSignature;
+    // })();
+
     return data;
   };
 
   return (
     <div className='App'>
-        <HeaderBar />
-        <SelectBankCard
-          establishData={returnEstablishData} 
-          TrustlyOptions={TrustlyOptions}
-        >
-        </SelectBankCard>
-        <PayCard 
-          establishData={returnEstablishData} 
-          TrustlyOptions={TrustlyOptions}
-        ></PayCard>
+      <HeaderBar />
+      <SelectBankCard
+        establishData={returnEstablishData}
+        TrustlyOptions={TrustlyOptions}
+      />
+      <PayCard
+        establishData={returnEstablishData}
+        TrustlyOptions={TrustlyOptions}
+      />
     </div>
   );
 }
