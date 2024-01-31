@@ -15,3 +15,9 @@ The `ios-app` directory contains a simple Swift app that renders a Webview of a 
 ## The Android App
 
 The `android-app` directory contains a simple Kotlin app that renders a Webview of a given URL. With the above React app running, the Android app can be pointed to the resulting URL to demonstrate the webview and secure-in-app-browser functionality required to successfully integrate the two applications. Additional instructions can be found in that directory's [ReadMe](./android-app/README.md).
+
+# Contributing
+
+You can participate in this project by submitting bugs and feature requests in the [Issues](https://github.com/TrustlyInc/trustly-webview-example/issues) tab. Please, add [@lukevance](https://github.com/lukevance) as an assignee.
+
+If you are interested in fixing issues and contributing directly to the code base, feel free to open a Pull Request with your changes. Please, make sure to fulfill our [Pull Request Template](https://github.com/TrustlyInc/trustly-webview-example/blob/main/.github/pull_request_template.md) and add [@lukevance](https://github.com/lukevance) as code reviewer.
