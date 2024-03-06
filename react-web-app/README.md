@@ -12,6 +12,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Copy the `.env.sample` file to a new `.env.local` file and fill out your environment variables.
 
+Alternatively, you can pass these data later using query parameters, via camelCase keys. Example:
+
+`?accessId=YOUR_ACCESS_ID&merchantId=YOUR_MERCHANT_ID`
+
+Both ways to fill the data work the same.
+
 3. Run
 
 `npm start`
@@ -34,3 +40,11 @@ Documentation: [Securing Requests](https://amer.developers.trustly.com/payments/
 2. Add the request signature endpoint (e.g. `http://localhost:8080/signature` in the NestJS Example) into `REACT_APP_TRUSTLY_SIGNATURE_API_URL` variable of the `.env.local` file
 3. Uncomment the `getRequestSignature` code snippet in the `App.js` file
 4. Run your app
+
+# Live Example
+
+Visit https://TrustlyInc.github.io/trustly-webview-example/ to see the project live.
+
+Important: You'll need to pass your sandbox environment variables using query parameters. Check the `.env.sample` file to learn about the required properties. Example:
+
+`https://TrustlyInc.github.io/trustly-webview-example/?accessId=YOUR_ACCESS_ID&merchantId=YOUR_MERCHANT_ID`

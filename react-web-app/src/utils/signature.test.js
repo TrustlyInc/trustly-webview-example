@@ -18,6 +18,8 @@ const isHmacSha1Base64Hash = (str) => {
 
 describe('getRequestSignature', () => {
   test('returns a Base64 encoded HMAC-SHA1-like data if request succeeds', async () => {
+    window.env = { SIGNATURE_API_URL: '#' };
+
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,

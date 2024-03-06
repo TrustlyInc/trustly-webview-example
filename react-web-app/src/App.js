@@ -1,15 +1,23 @@
+import { useEffect, useState } from 'react';
+
+import { exposeEnvVariables, loadScript } from './utils/sdk';
 // import { getRequestSignature } from './utils/signature';
 import HeaderBar from './HeaderBar';
 import PayCard from './PayCard';
 import SelectBankCard from './SelectBankCard';
 
-const ACCESS_ID = process.env.REACT_APP_TRUSTLY_ACCESS_ID;
-const MERCHANT_ID = process.env.REACT_APP_TRUSTLY_MERCHANT_ID;
-const serverURL = process.env.SERVER_URL ? process.env.SERVER_URL : null;
-
 const params = new URLSearchParams(window.location.search);
 
 function App() {
+  const [sdkLoaded, setSdkLoaded] = useState(false);
+
+  useEffect(() => {
+    exposeEnvVariables();
+    loadScript(() => {
+      setSdkLoaded(true);
+    });
+  }, []);
+
   const TrustlyOptions = {
     closeButton: false,
     dragAndDrop: true,
@@ -17,7 +25,8 @@ function App() {
   };
 
   const returnEstablishData = async () => {
-    let lightboxRedirectURL = serverURL ? serverURL : '#';
+    const { ACCESS_ID, MERCHANT_ID, SERVER_URL } = window.env;
+    const lightboxRedirectURL = SERVER_URL || '#';
 
     let data = {
       accessId: ACCESS_ID,
@@ -57,15 +66,19 @@ function App() {
 
   return (
     <div className='App'>
-      <HeaderBar />
-      <SelectBankCard
-        establishData={returnEstablishData}
-        TrustlyOptions={TrustlyOptions}
-      />
-      <PayCard
-        establishData={returnEstablishData}
-        TrustlyOptions={TrustlyOptions}
-      />
+      {sdkLoaded && (
+        <>
+          <HeaderBar />
+          <SelectBankCard
+            establishData={returnEstablishData}
+            TrustlyOptions={TrustlyOptions}
+          />
+          <PayCard
+            establishData={returnEstablishData}
+            TrustlyOptions={TrustlyOptions}
+          />
+        </>
+      )}
     </div>
   );
 }
